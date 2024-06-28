@@ -7,6 +7,10 @@ import med.voll.api.models.doctor.Doctor;
 import med.voll.api.models.doctor.DoctorData;
 import med.voll.api.models.doctor.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,11 +28,12 @@ public class DoctorController {
 	}
 
 	@GetMapping
-	public List<DoctorData> list() {
-		return repository.findAll()
-				.stream()
-				.map(DoctorData::new)
-				.toList();
+	public Page<DoctorData> list(
+			@PageableDefault(size = 3, sort = {"crm"}, direction = Sort.Direction.DESC)
+			Pageable pageable
+	) {
+		return repository.findAll(pageable)
+				.map(DoctorData::new);
 	}
 
 
