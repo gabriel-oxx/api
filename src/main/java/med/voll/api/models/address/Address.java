@@ -18,7 +18,7 @@ public class Address {
 	private String number;
 	private String complement;
 
-	public Address(AddressData address) {
+	public Address(AddressInputDto address) {
 		this.street = address.street();
 		this.neighborhood = address.neighborhood();
 		this.cep = address.cep();
@@ -29,7 +29,7 @@ public class Address {
 	}
 
 
-	public void updateInfo(AddressData data) {
+	public void updateInfo(AddressInputDto data) {
 		if (data.street() != null)
 			this.street = data.street();
 

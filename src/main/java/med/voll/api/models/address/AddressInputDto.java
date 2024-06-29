@@ -3,7 +3,7 @@ package med.voll.api.models.address;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
-public record AddressData(
+public record AddressInputDto(
 		@NotBlank
 		String street,
 		@NotBlank

@@ -2,11 +2,12 @@ package med.voll.api.controller;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import med.voll.api.models.doctor.DataRegistration;
-import med.voll.api.models.doctor.Doctor;
-import med.voll.api.models.doctor.DoctorData;
-import med.voll.api.models.doctor.UpdateDoctorData;
-import med.voll.api.models.doctor.repository.DoctorRepository;
+import med.voll.api.models.doctor.dtos.RegisterDoctorInput;
+import med.voll.api.models.doctor.dtos.RegisterDoctorOutput;
+import med.voll.api.models.doctor.dtos.UpdateDoctor;
+import med.voll.api.models.doctor.entities.Doctor;
+
+import med.voll.api.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,22 +23,22 @@ public class DoctorController {
 
 	@PostMapping
 	@Transactional
-	public void register(@Valid @RequestBody DataRegistration data) {
+	public void register(@Valid @RequestBody RegisterDoctorInput data) {
 		repository.save(new Doctor(data));
 	}
 
 	@GetMapping
-	public Page<DoctorData> list(
+	public Page<RegisterDoctorOutput> list(
 			@PageableDefault(size = 3, sort = {"crm"}, direction = Sort.Direction.DESC)
 			Pageable pageable
 	) {
 		return repository.findAllByActiveTrue(pageable)
-				.map(DoctorData::new);
+				.map(RegisterDoctorOutput::new);
 	}
 
 	@PutMapping
 	@Transactional
-	public void update(@Valid @RequestBody UpdateDoctorData data) {
+	public void update(@Valid @RequestBody UpdateDoctor data) {
 		var doctor = repository.getReferenceById(data.id());
 		doctor.updateInfo(data);
 	}

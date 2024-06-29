@@ -1,4 +1,4 @@
-package med.voll.api.models.doctor;
+package med.voll.api.models.doctor.entities;
 
 
 import jakarta.persistence.*;
@@ -7,7 +7,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import med.voll.api.models.address.Address;
-import med.voll.api.models.address.AddressData;
+import med.voll.api.models.doctor.dtos.RegisterDoctorInput;
+import med.voll.api.models.doctor.dtos.Specialties;
+import med.voll.api.models.doctor.dtos.UpdateDoctor;
 
 @Entity
 @Table(name = "doctors")
@@ -24,22 +26,22 @@ public class Doctor {
 	private String phone;
 	private String crm;
 	@Enumerated(EnumType.STRING)
-	private Specialty specialty;
+	private Specialties specialties;
 	@Embedded
 	private Address address;
 	private boolean active;
 
-	public Doctor(DataRegistration data) {
+	public Doctor(RegisterDoctorInput data) {
 		this.active = true;
 		this.name = data.name();
 		this.email = data.email();
 		this.phone = data.phone();
 		this.crm = data.crm();
-		this.specialty = data.specialty();
+		this.specialties = data.specialties();
 		this.address = new Address(data.address());
 	}
 
-	public void updateInfo(UpdateDoctorData data) {
+	public void updateInfo(UpdateDoctor data) {
 
 		if (data.name() != null)
 			this.name = data.name();
