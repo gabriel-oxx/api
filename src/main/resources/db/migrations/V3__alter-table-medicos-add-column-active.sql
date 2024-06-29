@@ -1,0 +1,2 @@
+ALTER TABLE doctors ADD COLUMN active BOOLEAN DEFAULT T;
+UPDATE doctors SET active = F;

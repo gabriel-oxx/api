@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import med.voll.api.models.doctor.DataRegistration;
 import med.voll.api.models.doctor.Doctor;
 import med.voll.api.models.doctor.DoctorData;
+import med.voll.api.models.doctor.UpdateDoctorData;
 import med.voll.api.models.doctor.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,8 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("medicos")
@@ -32,8 +31,23 @@ public class DoctorController {
 			@PageableDefault(size = 3, sort = {"crm"}, direction = Sort.Direction.DESC)
 			Pageable pageable
 	) {
-		return repository.findAll(pageable)
+		return repository.findAllByActiveTrue(pageable)
 				.map(DoctorData::new);
+	}
+
+	@PutMapping
+	@Transactional
+	public void update(@Valid @RequestBody UpdateDoctorData data) {
+		var doctor = repository.getReferenceById(data.id());
+		doctor.updateInfo(data);
+	}
+
+
+	@DeleteMapping("/{id}")
+	@Transactional
+	public void delete(@PathVariable Long id) {
+		var doctor = repository.getReferenceById(id);
+		doctor.delete();
 	}
 
 
