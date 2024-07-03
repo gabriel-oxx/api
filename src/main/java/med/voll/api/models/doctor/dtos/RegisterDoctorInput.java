@@ -8,19 +8,19 @@ import jakarta.validation.constraints.Pattern;
 import med.voll.api.models.address.AddressInputDto;
 
 public record RegisterDoctorInput(
-		@NotBlank
+		@NotBlank(message = "Nome é obrigatório")
 		String name,
-		@NotBlank
-				@Email
+		@NotBlank(message = "Email é obrigatório")
+				@Email(message = "O email deve possuir '@' para separar o nome de usuário do domínio")
 		String email,
-@NotBlank
+@NotBlank(message = "O número de telefone é obrigatório")
 String phone,
-@NotBlank
-		@Pattern(regexp = "\\d{4,6}")
+@NotBlank(message = "O número do CRM é obrigatório")
+		@Pattern(regexp = "\\d{4,6}", message = "O formato do CRM está incorreto")
 String crm,
-		@NotNull
+		@NotNull(message = "É obrigatório informar uma especialidade")
 		Specialties specialties,
-		@NotNull
+		@NotNull(message = "É obrigatório informar um endereço")
 				@Valid
 		AddressInputDto address
 ) {
