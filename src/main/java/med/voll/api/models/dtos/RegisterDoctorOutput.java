@@ -1,6 +1,6 @@
-package med.voll.api.models.doctor.dtos;
+package med.voll.api.models.dtos;
 
-import med.voll.api.models.doctor.entities.Doctor;
+import med.voll.api.models.entities.Doctor;
 
 public record RegisterDoctorOutput(
 		Long id,
@@ -17,7 +17,7 @@ public record RegisterDoctorOutput(
 				doctor.getEmail(),
 				doctor.getCrm(),
 				doctor.getSpecialties()
-		);
+		);	
 	}
 
 

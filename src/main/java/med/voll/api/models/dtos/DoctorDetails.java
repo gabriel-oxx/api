@@ -1,9 +1,9 @@
-package med.voll.api.models.doctor.dtos;
+package med.voll.api.models.dtos;
 
 import med.voll.api.models.address.Address;
-import med.voll.api.models.doctor.entities.Doctor;
+import med.voll.api.models.entities.Doctor;
 
-public record DoctorDetailes(
+public record DoctorDetails(
 		Long id,
 		String name,
 		String email,
@@ -12,7 +12,7 @@ public record DoctorDetailes(
 		Specialties specialties,
 		Address address
 ) {
-	public DoctorDetailes(Doctor doctor) {
+	public DoctorDetails(Doctor doctor) {
 		this(
 				doctor.getId(),
 				doctor.getName(),

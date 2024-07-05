@@ -2,11 +2,11 @@ package med.voll.api.controller;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import med.voll.api.models.doctor.dtos.DoctorDetailes;
-import med.voll.api.models.doctor.dtos.RegisterDoctorInput;
-import med.voll.api.models.doctor.dtos.RegisterDoctorOutput;
-import med.voll.api.models.doctor.dtos.UpdateDoctor;
-import med.voll.api.models.doctor.entities.Doctor;
+import med.voll.api.models.dtos.DoctorDetails;
+import med.voll.api.models.dtos.RegisterDoctorInput;
+import med.voll.api.models.dtos.RegisterDoctorOutput;
+import med.voll.api.models.dtos.UpdateDoctor;
+import med.voll.api.models.entities.Doctor;
 
 import med.voll.api.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class DoctorController {
 		var doctor = new Doctor(data);
 		repository.save(doctor);
 		var uri = uriBuilder.path("/doctors/{id}").buildAndExpand(doctor.getId()).toUri();
-		return ResponseEntity.created(uri).body(new DoctorDetailes(doctor));
+		return ResponseEntity.created(uri).body(new DoctorDetails(doctor));
 	}
 
 	@GetMapping
@@ -48,7 +48,7 @@ public class DoctorController {
 	public ResponseEntity update(@Valid @RequestBody UpdateDoctor data) {
 		var doctor = repository.getReferenceById(data.id());
 		doctor.updateInfo(data);
-		return ResponseEntity.ok(new DoctorDetailes(doctor));
+		return ResponseEntity.ok(new DoctorDetails(doctor));
 	}
 
 
@@ -63,6 +63,6 @@ public class DoctorController {
 	@GetMapping("/{id}")
 	public ResponseEntity getDoctor(@PathVariable Long id) {
 		var doctor = repository.getReferenceById(id);
-		return ResponseEntity.ok(new DoctorDetailes(doctor));
+		return ResponseEntity.ok(new DoctorDetails(doctor));
 	}
 }

@@ -1,8 +1,9 @@
-package med.voll.api.models.doctor.dtos;
+package med.voll.api.models.dtos;
 
 public enum Specialties {
 	ORTOPEDIA,
 	CARDIOLOGIA,
 	GINECOLOGIA,
-	DERMATOLOGIA;
+	DERMATOLOGIA,
+	OFTALMOLOGIA;
 }

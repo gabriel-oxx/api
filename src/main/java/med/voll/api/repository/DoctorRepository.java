@@ -1,6 +1,6 @@
 package med.voll.api.repository;
 
-import med.voll.api.models.doctor.entities.Doctor;
+import med.voll.api.models.entities.Doctor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

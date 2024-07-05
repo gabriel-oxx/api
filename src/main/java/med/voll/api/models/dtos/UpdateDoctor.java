@@ -1,4 +1,4 @@
-package med.voll.api.models.doctor.dtos;
+package med.voll.api.models.dtos;
 
 import jakarta.validation.constraints.NotNull;
 import med.voll.api.models.address.AddressInputDto;
