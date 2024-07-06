@@ -29,7 +29,7 @@ public class DoctorController {
 	public ResponseEntity register(@Valid @RequestBody RegisterDoctorInput data, UriComponentsBuilder uriBuilder) {
 		var doctor = new Doctor(data);
 		repository.save(doctor);
-		var uri = uriBuilder.path("/doctors/{id}").buildAndExpand(doctor.getId()).toUri();
+		var uri = uriBuilder.path("/medicos/{id}").buildAndExpand(doctor.getId()).toUri();
 		return ResponseEntity.created(uri).body(new DoctorDetails(doctor));
 	}
 
