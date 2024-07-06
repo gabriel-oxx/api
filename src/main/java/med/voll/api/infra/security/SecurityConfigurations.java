@@ -13,7 +13,9 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+
 public class SecurityConfigurations {
+	//private SecurityFilter springSecurity;
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		/*
@@ -21,11 +23,15 @@ public class SecurityConfigurations {
 				       .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
 		 */
-		return http.csrf()
-				       .disable()
-				       .sessionManagement()
-				       .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				       .and().build();
+
+		return
+				http.csrf(csrf -> csrf.disable())
+						.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+						.authorizeHttpRequests(req -> {
+							req.requestMatchers("/login").permitAll();
+							req.anyRequest().authenticated();
+						})
+						.build();
 	}
 
 	@Bean

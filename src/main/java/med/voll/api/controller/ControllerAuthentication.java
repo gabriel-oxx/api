@@ -1,7 +1,11 @@
 package med.voll.api.controller;
 
 import jakarta.validation.Valid;
+import med.voll.api.infra.security.TokenService;
+import med.voll.api.infra.security.dataTokenJWT;
 import med.voll.api.models.entities.user.AuthenticationData;
+import med.voll.api.models.entities.user.ServiceAuthentication;
+import med.voll.api.models.entities.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,10 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class ControllerAuthentication {
 	@Autowired
 	private AuthenticationManager authenticationManager;
+	@Autowired
+	private TokenService tokenService;
 	@PostMapping
 	ResponseEntity signIn(@RequestBody @Valid AuthenticationData data){
 		var token = new UsernamePasswordAuthenticationToken(data.userName(), data.password());
 		var authentication =  authenticationManager.authenticate(token);
-		return ResponseEntity.ok(token);
+		var tokenJWT = tokenService.generateToken((User) authentication.getPrincipal());
+		return ResponseEntity.ok(new dataTokenJWT(tokenJWT));
 	}
 }
