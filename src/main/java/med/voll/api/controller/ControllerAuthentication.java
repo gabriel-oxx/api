@@ -20,6 +20,6 @@ public class ControllerAuthentication {
 	ResponseEntity signIn(@RequestBody @Valid AuthenticationData data){
 		var token = new UsernamePasswordAuthenticationToken(data.userName(), data.password());
 		var authentication =  authenticationManager.authenticate(token);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok(token);
 	}
 }
