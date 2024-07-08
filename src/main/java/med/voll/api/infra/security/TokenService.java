@@ -17,14 +17,14 @@ import java.time.ZoneOffset;
 public class TokenService {
 	@Value("${api.security.token.secret}")
 	private String secret;
-	private  final String ISSUER = "API Voll.med";
+	private final String ISSUER = "API Voll.med";
 
 	public String generateToken(User user) {
-		System.out.println(secret);
+		System.out.println("Chave: " + secret);
 		try {
 			var algorithm = Algorithm.HMAC256(secret);
 			return JWT.create()
-					.withIssuer(ISSUER)
+					       .withIssuer(ISSUER)
 					       .withSubject(user.getUsername())
 					       .withExpiresAt(expirationDate())
 					       .sign(algorithm);
@@ -39,17 +39,17 @@ public class TokenService {
 				       .toInstant(ZoneOffset.of("-03:00"));
 	}
 
-	public String getSubject(String tokenJWT) {
-		try {
-			var algorithm = Algorithm.HMAC256(secret);
-			return JWT.require(algorithm)
-					       .withIssuer(ISSUER)
-					       .build()
-					       .verify(tokenJWT)
-					       .getSubject();
-		} catch (JWTVerificationException exception) {
-			new RuntimeException("Erro ao gerar token: " + exception);
+		public String getSubject(String tokenJWT) {
+			try {
+				var algorithm = Algorithm.HMAC256(secret);
+				return JWT.require(algorithm)
+									.withIssuer(ISSUER)
+									.build()
+									.verify(tokenJWT)
+									.getSubject();
+			} catch (JWTVerificationException exception) {
+				new RuntimeException("Erro ao gerar token: " + exception);
+			}
+			return null;
 		}
-		return null;
-	}
 }

@@ -14,6 +14,18 @@ public class ServiceAuthentication implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return userRepository.findByUserName(username);
+		try {
+			System.out.println("Buscando usuário pelo nome: " + username);
+			UserDetails userDetails = userRepository.findByUserName(username);
+			if (userDetails != null) {
+				System.out.println("Usuário encontrado: " + userDetails.getUsername());
+			} else {
+				System.out.println("Usuário não encontrado");
+			}
+			return userDetails;
+		} catch (Exception e) {
+			throw new UsernameNotFoundException(e.getMessage());
+		}
 	}
+
 }
